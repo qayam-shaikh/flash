@@ -1,0 +1,279 @@
+You are a senior DevOps + full-stack engineer.
+
+Build a complete local project named:
+
+**“Flash Sale Resilient DevOps Control Panel”**
+
+### 🎯 Objective
+
+Create a system that demonstrates:
+
+1. **Traffic spike simulation (flash sale)**
+2. **Kubernetes auto-scaling (HPA)**
+3. **Real-time pod metrics visualization (custom UI, no Grafana)**
+4. **Faulty deployment detection**
+5. **Automatic rollback to last stable version**
+6. **Incident notification with commit author shown in UI**
+
+The system must be runnable locally using **Minikube** (no cloud).
+
+---
+
+## 🧱 System Requirements
+
+### 1. Application (2 versions)
+
+* Use **Node.js (Express)** or **Python (Flask)**
+* Endpoints:
+
+  * `/` → basic response
+  * `/health` → returns 200 in v1, fails in v2
+* Versions:
+
+  * `v1` (stable)
+  * `v2` (buggy: return 500 or crash on /health)
+
+---
+
+### 2. Docker
+
+* Provide Dockerfile
+* Build images:
+
+  * `myapp:v1`
+  * `myapp:v2`
+
+---
+
+### 3. Kubernetes (Minikube)
+
+Provide YAML files for:
+
+* Deployment (with image version)
+* Service (NodePort or ClusterIP)
+* HPA (CPU-based scaling)
+
+#### Deployment must include:
+
+* `readinessProbe` and `livenessProbe` using `/health`
+* `revisionHistoryLimit: 5`
+
+#### HPA:
+
+* minReplicas: 1
+* maxReplicas: 5
+* target CPU utilization: ~50–60%
+
+---
+
+### 4. Metrics (NO Grafana)
+
+Use:
+
+* Kubernetes **Metrics Server**
+
+Backend must fetch:
+
+* Pod list
+* CPU usage
+* Memory usage
+* Pod status
+
+Use either:
+
+* Kubernetes client library OR
+* shell commands (`kubectl top pods`, `kubectl get pods`)
+
+---
+
+### 5. Backend (Control Layer)
+
+Create a backend service (Node.js preferred) with APIs:
+
+#### Required endpoints:
+
+* `GET /api/pods`
+
+  * Returns:
+
+    * pod name
+    * CPU (millicores as number)
+    * memory
+    * status
+
+* `POST /api/mode`
+
+  * body: `{ mode: "chaos" | "cool" }`
+  * chaos → start load test
+  * cool → stop load test
+
+* `POST /api/incident`
+
+  * receives incident data (from CI/CD)
+  * store latest incident in memory
+
+* `GET /api/incident/latest`
+
+  * returns latest incident
+
+---
+
+### 6. Load Generator
+
+Provide:
+
+* `k6` script OR `ab` command
+
+Goal:
+
+* Generate enough load to trigger HPA scaling
+
+---
+
+### 7. Frontend (Custom Dashboard)
+
+Use:
+
+* React OR plain HTML + JS
+
+#### Features:
+
+### A. Mode Toggle
+
+* Button: Chaos Mode 🔴
+* Button: Cool Mode 🟢
+
+---
+
+### B. Pod Dashboard (Grid UI)
+
+Each pod card must display:
+
+* Pod name
+* CPU usage
+* Memory
+* Status
+
+#### Behavior:
+
+* Refresh every **1 second**
+* Animate:
+
+  * CPU value changes (smooth)
+  * New pods → fade-in
+  * Removed pods → fade-out
+
+---
+
+### C. Visual Indicators
+
+* Color coding:
+
+  * Green (low CPU)
+  * Yellow (medium)
+  * Red (high)
+
+---
+
+### D. Scaling Visualization (IMPORTANT)
+
+* CPU spike should appear BEFORE new pods
+* Pod count increases AFTER delay (real HPA behavior)
+* Reverse for cool mode
+
+---
+
+### E. Emergency Popup (Critical Feature)
+
+When incident occurs:
+
+Display modal:
+
+🚨 DEPLOYMENT FAILURE
+Buggy code detected
+
+Author: 
+Version: 
+Action: Auto rollback
+
+System restored to last stable version
+
+#### UI behavior:
+
+* Red flashing background
+* Appears when new incident detected
+* Auto-dismiss after 5–8 seconds
+
+---
+
+### 8. CI/CD (Jenkins Simulation)
+
+Provide Jenkinsfile that:
+
+1. Builds image
+2. Deploys to Kubernetes
+3. Runs health check
+4. If failed:
+
+   * rollback using:
+     `kubectl rollout undo deployment myapp`
+   * send POST request to backend `/api/incident` with:
+
+     * author name (from git)
+     * version
+     * reason
+
+---
+
+### 9. Project Structure
+
+Provide:
+
+* `/app` → application code
+* `/backend` → API server
+* `/frontend` → UI
+* `/k8s` → YAML files
+* `/scripts` → load + helper scripts
+
+---
+
+### 10. Commands (CRITICAL)
+
+Provide step-by-step commands for:
+
+1. Start Minikube
+2. Enable metrics server
+3. Build Docker images
+4. Apply Kubernetes configs
+5. Start backend
+6. Start frontend
+7. Run load test
+8. Trigger scaling
+9. Deploy buggy version
+10. Rollback
+
+---
+
+## 🚫 Constraints
+
+* No cloud services
+* No Grafana / Prometheus
+* Keep project runnable in 2 days
+* Avoid unnecessary complexity
+
+---
+
+## 🎯 Output Format
+
+* Provide all code files in code blocks
+* Provide commands separately
+* Ensure everything runs without modification
+* Keep code clean and minimal
+
+---
+
+## ⚠️ Notes
+
+* Webhook setup (GitHub → Jenkins) is NOT required in code output
+* Assume backend `/api/incident` will be called externally
+* Focus on core system behavior and UI visualization  {
