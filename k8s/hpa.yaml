@@ -7,7 +7,7 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: myapp
-  minReplicas: 1
+  minReplicas: 1  
   maxReplicas: 5
   metrics:
     - type: Resource
@@ -21,11 +21,11 @@ spec:
       stabilizationWindowSeconds: 0
       policies:
         - type: Pods
-          value: 1
-          periodSeconds: 30
+          value: 5
+          periodSeconds: 10
     scaleDown:
-      stabilizationWindowSeconds: 30
+      stabilizationWindowSeconds: 10
       policies:
         - type: Pods
-          value: 1
-          periodSeconds: 30
+          value: 4
+          periodSeconds: 10

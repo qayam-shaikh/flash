@@ -12,6 +12,7 @@ or via Flask CLI:
 
 from flashsale import create_app
 
+# Webhook trigger test commit
 app = create_app()
 
 if __name__ == "__main__":
