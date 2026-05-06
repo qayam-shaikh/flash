@@ -8,7 +8,7 @@ pipeline {
 
   environment {
     APP_NAME = 'myapp'
-    VERSION = "${params.VERSION}"
+    VERSION = "v1"
     BACKEND_URL = "${params.BACKEND_URL}"
   }
 
