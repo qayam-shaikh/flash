@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   parameters {
-    string(name: 'VERSION', defaultValue: 'v2', description: 'Image version to deploy, for example v1 or v2')
+    string(name: 'VERSION', defaultValue: 'v1', description: 'Image version to deploy, for example v1 or v2')
     string(name: 'BACKEND_URL', defaultValue: 'http://localhost:4000', description: 'Control backend URL')
   }
 
