@@ -40,15 +40,89 @@ body {
 .header-inner {
   max-width: 1200px; margin: auto;
   padding: .9rem 1.5rem;
-  display: flex; align-items: center; gap: 1rem;
+  display: flex; align-items: center; gap: 1.5rem;
 }
 .logo {
   font-size: 1.4rem; font-weight: 800;
   background: linear-gradient(90deg, #f59e0b, #ef4444);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   letter-spacing: -.5px;
+  text-decoration: none;
 }
-.tagline { font-size: .8rem; color: var(--clr-muted); }
+.tagline { font-size: .8rem; color: var(--clr-muted); flex-grow: 1; }
+
+.nav-links { display: flex; gap: 1rem; }
+.nav-link {
+  color: var(--clr-text);
+  text-decoration: none;
+  font-size: .85rem;
+  font-weight: 600;
+  padding: .4rem .8rem;
+  border-radius: 8px;
+  transition: background var(--transition);
+}
+.nav-link:hover { background: var(--clr-surface2); color: var(--clr-accent); }
+
+/* ── Profile Page ────────────────────────────────────────── */
+.profile-card {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.profile-card::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: linear-gradient(180deg, #f59e0b, #ef4444);
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--clr-border);
+  padding-bottom: 2rem;
+}
+.profile-avatar {
+  width: 80px; height: 80px;
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  color: #0d0f14;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; font-weight: 800;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+}
+.profile-info h1 { font-size: 1.5rem; font-weight: 700; color: var(--clr-text); }
+.profile-info p { color: var(--clr-muted); font-size: .9rem; margin-top: .2rem; }
+
+.profile-details h3 {
+  font-size: 1.1rem; font-weight: 700;
+  color: var(--clr-accent);
+  margin-bottom: 1rem;
+}
+.profile-details p {
+  color: var(--clr-text);
+  margin-bottom: .6rem;
+  font-size: .95rem;
+}
+.profile-details strong { color: var(--clr-muted); font-weight: 500; margin-right: .5rem; }
+
+.back-link {
+  display: inline-block;
+  margin-top: 2rem;
+  color: var(--clr-accent);
+  text-decoration: none;
+  font-size: .9rem;
+  font-weight: 600;
+  transition: transform var(--transition);
+}
+.back-link:hover { transform: translateX(-4px); color: var(--clr-text); }
 
 /* ── Hero ───────────────────────────────────────────────── */
 .hero {

@@ -8,7 +8,7 @@ pipeline {
 
   environment {
     APP_NAME = 'myapp'
-    VERSION = "v1"
+    VERSION = "${params.VERSION}"
     BACKEND_URL = "${params.BACKEND_URL}"
   }
 
@@ -16,6 +16,7 @@ pipeline {
     stage('Build image') {
       steps {
         sh '''
+          eval $(minikube docker-env)
           docker build \
             --build-arg APP_VERSION=${VERSION} \
             -t ${APP_NAME}:${VERSION} \
