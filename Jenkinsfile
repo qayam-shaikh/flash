@@ -29,6 +29,7 @@ pipeline {
         sh '''
           kubectl patch deployment/${APP_NAME} \
             -p "{\\"spec\\":{\\"template\\":{\\"spec\\":{\\"containers\\":[{\\"name\\":\\"${APP_NAME}\\",\\"image\\":\\"${APP_NAME}:${VERSION}\\",\\"env\\":[{\\"name\\":\\"APP_VERSION\\",\\"value\\":\\"${VERSION}\\"},{\\"name\\":\\"FLASK_DEBUG\\",\\"value\\":\\"false\\"},{\\"name\\":\\"FLASHSALE_DB_PATH\\",\\"value\\":\\"/data/flashsale.db\\"},{\\"name\\":\\"FLASHSALE_LOG_PATH\\",\\"value\\":\\"/data/logs/flashsale.log\\"}]}]}}}}"
+          kubectl rollout restart deployment/${APP_NAME}
         '''
       }
     }
