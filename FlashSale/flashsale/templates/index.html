@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>⚡ FlashSale – Live Deals</title>
+  <meta name="description" content="FlashSale – grab limited-stock deals before they're gone!" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <!-- ── Header ─────────────────────────────────────────────────────────── -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">⚡ FlashSale</div>
+      <span class="tagline">Limited stock · Real-time updates</span>
+    </div>
+  </header>
+
+  <!-- ── Hero banner ────────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-inner">
+      <h1>Today's Flash Deals</h1>
+      <p>Lightning-fast checkout · Stock guaranteed at payment time</p>
+    </div>
+  </section>
+
+  <!-- ── Toast notification ─────────────────────────────────────────────── -->
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- ── Products grid ──────────────────────────────────────────────────── -->
+  <main class="container">
+    <div class="products-grid" id="products-grid">
+      {% for product in products %}
+      <article class="product-card {% if product.stock == 0 %}sold-out{% endif %}"
+               data-id="{{ product.id }}"
+               id="card-{{ product.id }}">
+
+        <!-- Stock badge -->
+        <span class="stock-badge {% if product.stock == 0 %}badge-empty{% elif product.stock <= 10 %}badge-low{% else %}badge-ok{% endif %}">
+          {% if product.stock == 0 %}SOLD OUT
+          {% elif product.stock <= 10 %}Only {{ product.stock }} left!
+          {% else %}{{ product.stock }} in stock{% endif %}
+        </span>
+
+        <div class="card-body">
+          <h2 class="product-name">{{ product.name }}</h2>
+          <p class="product-price">${{ "%.2f"|format(product.price) }}</p>
+
+          <!-- Quantity control -->
+          <div class="qty-row">
+            <label for="qty-{{ product.id }}">Qty</label>
+            <div class="qty-control">
+              <button class="qty-btn" onclick="changeQty({{ product.id }}, -1)">−</button>
+              <input  id="qty-{{ product.id }}"
+                      class="qty-input"
+                      type="number"
+                      value="1" min="1" max="10"
+                      readonly />
+              <button class="qty-btn" onclick="changeQty({{ product.id }}, +1)">+</button>
+            </div>
+          </div>
+
+          <button class="buy-btn"
+                  id="buy-{{ product.id }}"
+                  onclick="buyProduct({{ product.id }})"
+                  {% if product.stock == 0 %}disabled{% endif %}>
+            {% if product.stock == 0 %}Sold Out{% else %}Buy Now{% endif %}
+          </button>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </main>
+
+  <!-- ── Footer ─────────────────────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <p>FlashSale &copy; 2026 &nbsp;·&nbsp; All prices are in USD</p>
+    <p class="api-hint">
+      API: <code>GET /products</code> &nbsp;|&nbsp;
+      <code>POST /buy</code> &nbsp;|&nbsp;
+      <code>GET /orders</code>
+    </p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
