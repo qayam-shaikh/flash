@@ -8,6 +8,8 @@ pipeline {
 
   environment {
     APP_NAME = 'myapp'
+    VERSION = "${params.VERSION}"
+    BACKEND_URL = "${params.BACKEND_URL}"
   }
 
   stages {
