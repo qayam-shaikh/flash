@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Profile – FlashSale</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <style>
+    .profile-card {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      max-width: 600px;
+      margin: 2rem auto;
+    }
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 1rem;
+    }
+    .profile-avatar {
+      width: 80px;
+      height: 80px;
+      background: #3b82f6;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+    .profile-info h1 { margin: 0; font-size: 1.5rem; }
+    .profile-info p { color: #666; margin: 0.25rem 0 0; }
+    .back-link {
+      display: inline-block;
+      margin-top: 1rem;
+      color: #3b82f6;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">⚡ FlashSale</div>
+      <span class="tagline">Limited stock · Real-time updates</span>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="profile-card">
+      <div class="profile-header">
+        <div class="profile-avatar">Q</div>
+        <div class="profile-info">
+          <h1>Qayam Shaikh</h1>
+          <p>DevOps Engineer · Premium Member</p>
+        </div>
+      </div>
+      
+      <div class="profile-details">
+        <h3>Account Settings</h3>
+        <p>Email: qayam@example.com</p>
+        <p>Location: Mumbai, India</p>
+        <p>Member Since: May 2026</p>
+      </div>
+
+      <a href="/" class="back-link">← Back to Shop</a>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>FlashSale &copy; 2026 &nbsp;·&nbsp; User Profile Page</p>
+  </footer>
+</body>
+</html>
