@@ -51,6 +51,13 @@ def index():
     return render_template("index.html", products=products)
 
 
+@bp.route("/profile", methods=["GET"])
+def profile():
+    """User profile page."""
+    from flask import render_template
+    return render_template("profile.html")
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Products
 # ─────────────────────────────────────────────────────────────────────────────
