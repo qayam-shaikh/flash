@@ -27,6 +27,14 @@
     <div class="hero-inner">
       <h1>Today's Flash Deals</h1>
       <p>Lightning-fast checkout · Stock guaranteed at payment time</p>
+      
+      <!-- Search Form -->
+      <div class="search-container" style="margin-top: 20px;">
+        <form action="/" method="GET" class="search-form" style="display: flex; gap: 10px; justify-content: center;">
+          <input type="text" name="q" value="{{ query or '' }}" placeholder="Search products..." class="search-input" style="padding: 10px; border-radius: 4px; border: 1px solid #ccc; width: 300px;">
+          <button type="submit" class="search-btn" style="padding: 10px 20px; border-radius: 4px; border: none; background: #ff4757; color: white; cursor: pointer;">Search</button>
+        </form>
+      </div>
     </div>
   </section>
 

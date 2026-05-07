@@ -45,10 +45,14 @@ def health():
 
 @bp.route("/", methods=["GET"])
 def index():
-    """Simple HTML page showing current products."""
+    """Simple HTML page showing current products (optionally filtered by search)."""
     from flask import render_template
-    products = models.get_all_products()
-    return render_template("index.html", products=products)
+    query = request.args.get("q", "").strip()
+    if query:
+        products = models.search_products(query)
+    else:
+        products = models.get_all_products()
+    return render_template("index.html", products=products, query=query)
 
 
 @bp.route("/profile", methods=["GET"])

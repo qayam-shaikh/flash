@@ -43,6 +43,18 @@ def get_product_by_id(product_id: int) -> Optional[dict]:
     return dict(row) if row else None
 
 
+def search_products(query: str) -> list[dict]:
+    """Return products whose names match the search query (case-insensitive)."""
+    conn = get_connection()
+    # Using lower() and LIKE for a simple search
+    rows = conn.execute(
+        "SELECT id, name, price, stock FROM products WHERE LOWER(name) LIKE LOWER(?) ORDER BY id;",
+        (f"%{query}%",),
+    ).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Orders
 # ─────────────────────────────────────────────────────────────────────────────
