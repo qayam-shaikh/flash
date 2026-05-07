@@ -20,6 +20,21 @@ function changeQty(productId, delta) {
 }
 
 
+/* ── Cart handler ──────────────────────────────────────────────────────── */
+
+let cartCount = 0;
+
+function addToCart(productId) {
+  const qtyInput = document.getElementById(`qty-${productId}`);
+  const quantity = parseInt(qtyInput.value, 10);
+  
+  cartCount += quantity;
+  document.getElementById("cart-count").textContent = cartCount;
+  
+  showToast(`🛒 Added ${quantity} item(s) to cart!`, "success");
+}
+
+
 /* ── Buy handler ───────────────────────────────────────────────────────── */
 
 async function buyProduct(productId) {

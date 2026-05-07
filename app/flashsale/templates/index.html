@@ -18,6 +18,9 @@
       <nav class="nav-links">
         <a href="/" class="nav-link">Shop</a>
         <a href="/profile" class="nav-link">My Profile</a>
+        <div class="cart-status">
+          🛒 <span id="cart-count">0</span>
+        </div>
       </nav>
     </div>
   </header>
@@ -74,12 +77,21 @@
             </div>
           </div>
 
-          <button class="buy-btn"
-                  id="buy-{{ product.id }}"
-                  onclick="buyProduct({{ product.id }})"
-                  {% if product.stock == 0 %}disabled{% endif %}>
-            {% if product.stock == 0 %}Sold Out{% else %}Buy Now{% endif %}
-          </button>
+          <div class="btn-group" style="display: flex; gap: 10px; margin-top: 15px;">
+            <button class="buy-btn"
+                    id="buy-{{ product.id }}"
+                    onclick="buyProduct({{ product.id }})"
+                    {% if product.stock == 0 %}disabled{% endif %}
+                    style="flex: 1;">
+              {% if product.stock == 0 %}Sold Out{% else %}Buy Now{% endif %}
+            </button>
+            <button class="cart-btn"
+                    onclick="addToCart({{ product.id }})"
+                    {% if product.stock == 0 %}disabled{% endif %}
+                    style="flex: 1; padding: 12px; border-radius: 6px; border: 1px solid #ff4757; background: white; color: #ff4757; font-weight: 600; cursor: pointer;">
+              Add to Cart
+            </button>
+          </div>
         </div>
       </article>
       {% endfor %}
